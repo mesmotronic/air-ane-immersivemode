@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/20.0">
+  <id>com.mesmotronic.ane.immersivemode.test</id>
+  <filename>ImmersiveModeTest</filename>
+  <name>Immersive Mode Test</name>
+  <versionNumber>1.0.0</versionNumber>
+  <initialWindow>
+    <content>ImmersiveModeTest.swf</content>
+	<autoOrients>true</autoOrients>
+    <fullScreen>false</fullScreen>
+    <visible>true</visible>
+    <softKeyboardBehavior>none</softKeyboardBehavior>
+  </initialWindow>
+  <android>
+    <colorDepth>16bit</colorDepth>
+    <manifestAdditions>
+	<![CDATA[
+	<manifest android:installLocation="auto">
+		<uses-permission android:name="android.permission.INTERNET" />
+	</manifest>
+	]]>
+	</manifestAdditions>
+  </android>
+  <iPhone>
+    <InfoAdditions>
+	<![CDATA[
+	<key>UIDeviceFamily</key>
+	<array>
+		<string>1</string>
+		<string>2</string>
+	</array>
+	]]>
+	</InfoAdditions>
+    <requestedDisplayResolution>high</requestedDisplayResolution>
+  </iPhone>
+  <extensions>
+    <extensionID>com.mesmotronic.ane.immersivemode</extensionID>
+  </extensions>
+</application>

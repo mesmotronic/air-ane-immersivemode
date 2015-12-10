@@ -1,0 +1,21 @@
+<extension xmlns="http://ns.adobe.com/air/extension/20.0">
+	<id>com.mesmotronic.ane.immersivemode</id>
+	<versionNumber>1.0.0</versionNumber>
+	<platforms>
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>immersivemode-ane-jar.jar</nativeLibrary>
+				<initializer>com.mesmotronic.ane.immersivemode.ImmersiveModeExtension</initializer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x86">
+			<applicationDeployment>
+				<nativeLibrary>immersivemode-ane-jar.jar</nativeLibrary>
+				<initializer>com.mesmotronic.ane.immersivemode.ImmersiveModeExtension</initializer>
+			</applicationDeployment>
+		</platform>
+		<platform name="default">
+			<applicationDeployment />
+		</platform>
+	</platforms>
+</extension>
