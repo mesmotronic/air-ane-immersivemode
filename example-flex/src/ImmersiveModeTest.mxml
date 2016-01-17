@@ -62,8 +62,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			protected function resizeHandler(event:ResizeEvent=null):void
 			{
-				trace("Application:", width, "x", height);
-				
 				if (stage)
 				{
 					trace("stage:", stage.stageWidth, "x", stage.stageHeight);
@@ -72,13 +70,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			protected function addedToStageHandler(event:Event):void
 			{
-				stage.addEventListener(KeyboardEvent.KEY_DOWN, backHandler);
+				ImmersiveMode.stage = stage;
 				resizeHandler();
-			}
-			
-			protected function backHandler(event:KeyboardEvent):void
-			{
-				trace(event.keyCode);
 			}
 			
 		]]>

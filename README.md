@@ -24,17 +24,15 @@ Using the ANE in your app couldn't be easier:
 
 ```as3
 import com.mesmotronic.ane.ImmersiveMode;
-import flash.display.StageDisplayState;
 
 // Put your app into the best available full screen mode
 
-if (!ImmersiveMode.isSupported) // Is immersive mode supported? (Android 4.4+)
-{
-    stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-}
+ImmersiveMode.stage = stage;
 
-trace(ImmersiveMode.immersiveWidth); // The width of the screen in immersive mode
-trace(ImmersiveMode.immersiveHeight); // The height of the screen in immersive mode
+// Get the maximum full screen resolution of your app  
+
+trace(ImmersiveMode.fullScreenWidth);
+trace(ImmersiveMode.fullScreenHeight);
 
 // Events (should work on most versions of Android)
 

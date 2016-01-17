@@ -31,21 +31,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.mesmotronic.ane
 {
 	import flash.desktop.NativeApplication;
+	import flash.display.Stage;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.StatusEvent;
 	import flash.external.ExtensionContext;
+	import flash.system.Capabilities;
 	
 	public class ImmersiveMode
 	{
 		static public const ANDROID_WINDOW_FOCUS_IN:String = 'androidWindowFocusIn';
 		static public const ANDROID_WINDOW_FOCUS_OUT:String = 'androidWindowFocusOut';
 		
+		static private var _stage:Stage;
+
 		// Static initializer
 		{
 			init();
 		}
 		
 		static private var context:ExtensionContext;
+		
+		public static function get stage():Stage
+		{
+			return _stage;
+		}
+		
+		public static function set stage(value:Stage):void
+		{
+			_stage = value;
+			
+			if (!isSupported && _stage)
+			{
+				_stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			}
+		}
 		
 		static private function init():void
 		{
@@ -68,23 +88,23 @@ package com.mesmotronic.ane
 		}
 		
 		/**
-		 * The height of the screen in immersive mode, or 0 if immersive mode is not supported
+		 * The width of the screen in the best available full screen mode
 		 * @return		int
 		 */
-		static public function get immersiveHeight():int
+		static public function get fullScreenWidth():int
 		{
-			if (!context) return 0;
-			return context.call('immersiveHeight') as int;
+			if (!isSupported) return Capabilities.screenResolutionX;
+			return context.call('immersiveWidth') as int;
 		}
 		
 		/**
-		 * The width of the screen in immersive mode, or 0 if immersive mode is not supported
+		 * The height of the screen in the best available full screen mode
 		 * @return		int
 		 */
-		static public function get immersiveWidth():int
+		static public function get fullScreenHeight():int
 		{
-			if (!context) return 0;
-			return context.call('immersiveWidth') as int;
+			if (!isSupported) return Capabilities.screenResolutionY;
+			return context.call('immersiveHeight') as int;
 		}
 		
 		/**

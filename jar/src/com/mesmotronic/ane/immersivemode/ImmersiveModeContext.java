@@ -160,11 +160,18 @@ public class ImmersiveModeContext extends FREContext
 						setSystemUiVisibility(uiOptions);
 					}
 					
-					String type = hasFocus
-						? "androidWindowFocusIn"
-						: "androidWindowFocusOut";
-					
-					dispatchStatusEventAsync(type, "");
+					try
+					{
+						String type = hasFocus
+							? "androidWindowFocusIn"
+							: "androidWindowFocusOut";
+						
+						dispatchStatusEventAsync(type, "");
+					}
+					catch (Exception e)
+					{
+						// Ignore errors
+					}
 					
 					windowCallback.onWindowFocusChanged(hasFocus);
 				}
