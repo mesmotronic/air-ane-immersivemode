@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2015, Mesmotronic Limited
+Copyright (c) 2016, Mesmotronic Limited
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -69,12 +69,17 @@ package com.mesmotronic.ane
 		
 		static private function init():void
 		{
-			context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
+			var version:String = Capabilities.version.substr(0,3);
 			
-			if (context)
+			if (version == 'AND')
 			{
-				context.call('init');
-				context.addEventListener(StatusEvent.STATUS, context_statusHandler);
+				context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
+				
+				if (context)
+				{
+					context.call('init');
+					context.addEventListener(StatusEvent.STATUS, context_statusHandler);
+				}
 			}
 		}
 		
