@@ -71,14 +71,19 @@ package com.mesmotronic.ane
 		{
 			var version:String = Capabilities.version.substr(0,3);
 			
-			if (version == 'AND')
+			switch (version)
 			{
-				context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
-				
-				if (context)
+				case 'AND':
 				{
-					context.call('init');
-					context.addEventListener(StatusEvent.STATUS, context_statusHandler);
+					context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
+					
+					if (context)
+					{
+						context.call('init');
+						context.addEventListener(StatusEvent.STATUS, context_statusHandler);
+					}
+					
+					break;
 				}
 			}
 		}
