@@ -59,12 +59,16 @@ package com.mesmotronic.ane
 		
 		public static function set stage(value:Stage):void
 		{
+			if (!(value is Stage))
+			{
+				throw new Error('stage cannot be undefined!');
+			}
+			
 			_stage = value;
 			
-			if (!isSupported && _stage)
-			{
-				_stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-			}
+			_stage.displayState = isSupported
+				? StageDisplayState.NORMAL
+				: StageDisplayState.FULL_SCREEN_INTERACTIVE;
 		}
 		
 		static private function init():void
