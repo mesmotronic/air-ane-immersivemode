@@ -43,14 +43,16 @@ package com.mesmotronic.ane
 		static public const ANDROID_WINDOW_FOCUS_IN:String = 'androidWindowFocusIn';
 		static public const ANDROID_WINDOW_FOCUS_OUT:String = 'androidWindowFocusOut';
 		
-		static private var _stage:Stage;
-
-		// Static initializer
-		{
-			init();
-		}
-		
 		static private var context:ExtensionContext;
+		static private var _stage:Stage;
+		
+		/**
+		 * Is this ANE supported?
+		 */
+		public static function get isSupported():Boolean
+		{
+			return true;
+		}
 		
 		public static function get stage():Stage
 		{
@@ -64,17 +66,9 @@ package com.mesmotronic.ane
 				throw new Error('stage cannot be undefined!');
 			}
 			
-			_stage = value;
-			
-			if (!isSupported)
-			{
-				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-			}
-		}
-		
-		static private function init():void
-		{
 			var version:String = Capabilities.version.substr(0,3);
+			
+			_stage = value;
 			
 			switch (version)
 			{
@@ -82,24 +76,23 @@ package com.mesmotronic.ane
 				{
 					context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
 					
-					if (context)
+					if (context && context.call('isSupported'))
 					{
+						_stage.displayState = StageDisplayState.NORMAL;
+						
 						context.call('init');
 						context.addEventListener(StatusEvent.STATUS, context_statusHandler);
+						break;
 					}
-					
+				}
+				
+				default:
+				{
+					_stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+					context = null;
 					break;
 				}
 			}
-		}
-		
-		/**
-		 * Is immersive mode supported on this device?
-		 */
-		static public function get isSupported():Boolean
-		{
-			return context 
-				&& context.call('isSupported') as Boolean;
 		}
 		
 		/**
@@ -108,8 +101,8 @@ package com.mesmotronic.ane
 		 */
 		static public function get fullScreenWidth():int
 		{
-			if (!isSupported) return Capabilities.screenResolutionX;
-			return context.call('immersiveWidth') as int;
+			if (context) return context.call('immersiveWidth') as int;
+			return Capabilities.screenResolutionX;
 		}
 		
 		/**
@@ -118,8 +111,8 @@ package com.mesmotronic.ane
 		 */
 		static public function get fullScreenHeight():int
 		{
-			if (!isSupported) return Capabilities.screenResolutionY;
-			return context.call('immersiveHeight') as int;
+			if (context) return context.call('immersiveHeight') as int;
+			return Capabilities.screenResolutionY;
 		}
 		
 		/**
