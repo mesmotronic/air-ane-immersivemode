@@ -3,7 +3,7 @@ Immersive Mode ANE for Adobe AIR
 
 This is a simplified version of our popular [Android Full Screen ANE](https://github.com/mesmotronic/air-ane-fullscreen) that puts your app into the best available full screen mode.
 
-On Android 4.4+, it switches your app into [immersive mode](http://developer.android.com/training/system-ui/immersive.html) falling back to `FULL_SCREEN_INTERACTIVE` display state on earlier versions of Android and other mobile platforms.
+On Android 4.4+, it switches your app into [immersive mode](http://developer.android.com/training/system-ui/immersive.html), falling back to `FULL_SCREEN_INTERACTIVE` display state on earlier versions of Android and other mobile platforms.
 
 Released under BSD license, see LICENSE for details. Requires Adobe AIR 20+.
 
