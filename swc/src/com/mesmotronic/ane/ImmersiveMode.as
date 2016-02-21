@@ -66,9 +66,10 @@ package com.mesmotronic.ane
 			
 			_stage = value;
 			
-			_stage.displayState = isSupported
-				? StageDisplayState.NORMAL
-				: StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			if (!isSupported)
+			{
+				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			}
 		}
 		
 		static private function init():void
