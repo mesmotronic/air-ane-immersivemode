@@ -5,7 +5,7 @@ This is a simplified version of our popular [Android Full Screen ANE](https://gi
 
 On Android 4.4+, it switches your app into [immersive mode](http://developer.android.com/training/system-ui/immersive.html), falling back to `FULL_SCREEN_INTERACTIVE` display state on earlier versions of Android and other mobile platforms.
 
-Requires Adobe AIR 20+. Released under BSD license, see LICENSE for details.
+Requires Adobe AIR 19+. Released under BSD license, see LICENSE for details.
 
 Just give me the ANE!
 ---------------------
