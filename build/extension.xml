@@ -1,4 +1,4 @@
-<extension xmlns="http://ns.adobe.com/air/extension/19.0">
+<extension xmlns="http://ns.adobe.com/air/extension/18.0">
 	<id>com.mesmotronic.ane.immersivemode</id>
 	<versionNumber>1.1.6</versionNumber>
 	<platforms>
