@@ -51,7 +51,11 @@ package com.mesmotronic.ane
 		 */
 		public static function get isSupported():Boolean
 		{
-			return true;
+            if (isAndroid() && context)
+            {
+                return context.call('isSupported');
+            }
+			return false;
 		}
 		
 		public static function get stage():Stage
@@ -65,34 +69,22 @@ package com.mesmotronic.ane
 			{
 				throw new Error('stage cannot be undefined!');
 			}
-			
-			var version:String = Capabilities.version.substr(0,3);
-			
-			_stage = value;
-			
-			switch (version)
-			{
-				case 'AND':
-				{
-					context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
-					
-					if (context && context.call('isSupported'))
-					{
-						_stage.displayState = StageDisplayState.NORMAL;
-						
-						context.call('init');
-						context.addEventListener(StatusEvent.STATUS, context_statusHandler);
-						break;
-					}
-				}
-				
-				default:
-				{
-					_stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-					context = null;
-					break;
-				}
-			}
+            _stage = value;
+            if (isAndroid())
+            {
+                context = ExtensionContext.createExtensionContext('com.mesmotronic.ane.immersivemode', '');
+                if (context && context.call('isSupported'))
+                {
+                    _stage.displayState = StageDisplayState.NORMAL;
+                    context.call('init');
+                    context.addEventListener(StatusEvent.STATUS, context_statusHandler);
+                }
+            }
+            else
+            {
+                _stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+                context = null;
+            }
 		}
 		
 		/**
@@ -121,6 +113,11 @@ package com.mesmotronic.ane
 		private static function context_statusHandler(event:StatusEvent):void
 		{
 			NativeApplication.nativeApplication.dispatchEvent(new Event(event.code));
+		}
+
+		public static function isAndroid() : Boolean
+		{
+			return Capabilities.manufacturer.indexOf("Android") != -1;
 		}
 	}
 }

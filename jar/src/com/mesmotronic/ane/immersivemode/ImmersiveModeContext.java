@@ -34,13 +34,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SearchEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
@@ -54,7 +54,9 @@ import com.mesmotronic.ane.immersivemode.functions.InitFunction;
 import com.mesmotronic.ane.immersivemode.functions.IsSupportedFunction;
 
 public class ImmersiveModeContext extends FREContext 
-{	
+{
+
+    final public static String TAG = "ImmersiveANE";
 	@Override
 	public void dispose() 
 	{
@@ -70,21 +72,21 @@ public class ImmersiveModeContext extends FREContext
 		functions.put("isSupported", new IsSupportedFunction());
 		functions.put("immersiveWidth", new ImmersiveWidthFunction());
 		functions.put("immersiveHeight", new ImmersiveHeightFunction());
-		
+
 		return functions;
 	}
 	
-	public Window getWindow()
+	private Window getWindow()
 	{
 		return getActivity().getWindow();
 	}
 	
-	public View getDecorView()
+	private View getDecorView()
 	{
 		return getWindow().getDecorView();
 	}
 	
-	public void setSystemUiVisibility(int visibility)
+	private void setSystemUiVisibility(int visibility)
 	{
 		getDecorView().setSystemUiVisibility(visibility);
 	}
@@ -93,26 +95,25 @@ public class ImmersiveModeContext extends FREContext
 	{
 		try
 		{
-			final View decorView = getDecorView();
-			final Window window = getWindow();
-			final Window.Callback windowCallback = getWindow().getCallback();
-			final View.OnFocusChangeListener focusChangeListener = getDecorView().getOnFocusChangeListener();
-			
-			final int uiOptions = 
-				View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-				| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-				| View.SYSTEM_UI_FLAG_FULLSCREEN
-				| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-			
+            final Window window = getWindow();
+            final Window.Callback windowCallback = getWindow().getCallback();
+
+            final int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE // 16
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // 16
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN // 16
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // 14
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // 16
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY; // 19
+
 			// If it's supported, switch to immersive mode
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
 			{
+                Log.d(TAG, "Setting Immersive mode");
 				setSystemUiVisibility(uiOptions);
-			
+
 				// It's sticky, so we add listeners to ensure immersive mode is maintained
-				
+                final View.OnFocusChangeListener focusChangeListener = getDecorView().getOnFocusChangeListener();
+                final View decorView = getDecorView();
 				decorView.setOnFocusChangeListener(new View.OnFocusChangeListener() 
 				{
 					@Override
@@ -122,7 +123,6 @@ public class ImmersiveModeContext extends FREContext
 						{
 							setSystemUiVisibility(uiOptions);
 						}
-						
 						focusChangeListener.onFocusChange(v, hasFocus);
 					}
 				});
@@ -139,11 +139,6 @@ public class ImmersiveModeContext extends FREContext
 			
 			window.setCallback(new Window.Callback()
 			{
-				@Override
-				public ActionMode onWindowStartingActionMode(Callback callback, int i)
-				{
-					return windowCallback.onWindowStartingActionMode(callback, i);
-				}
 				
 				@Override
 				public ActionMode onWindowStartingActionMode(Callback callback) 
@@ -180,12 +175,6 @@ public class ImmersiveModeContext extends FREContext
 				public void onWindowAttributesChanged(LayoutParams attrs) 
 				{
 					windowCallback.onWindowAttributesChanged(attrs);
-				}
-				
-				@Override
-				public boolean onSearchRequested(SearchEvent event) 
-				{
-					return windowCallback.onSearchRequested(event);
 				}
 				
 				@Override
@@ -299,7 +288,7 @@ public class ImmersiveModeContext extends FREContext
 		}
 		catch (Exception e)
 		{
-			// It didn't work :-(
+            Log.w(TAG, e.toString());
 		}
 	}
 }

@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.mesmotronic.ane.immersivemode.functions;
 
 import android.graphics.Point;
+import android.os.Build;
 import android.view.View;
 
 import com.adobe.fre.FREContext;
@@ -46,9 +47,11 @@ public class ImmersiveHeightFunction implements FREFunction
 		{
 			View decorView = context.getActivity().getWindow().getDecorView();
 			Point outSize = new Point();
-			
-			decorView.getDisplay().getRealSize(outSize);
-			
+
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+				decorView.getDisplay().getRealSize(outSize);
+			}
+
 			return FREObject.newObject(outSize.y);
 		}
 		catch (Exception e0)

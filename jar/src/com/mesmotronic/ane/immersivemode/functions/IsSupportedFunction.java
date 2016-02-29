@@ -31,17 +31,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.mesmotronic.ane.immersivemode.functions;
 
 import android.os.Build;
+import android.util.Log;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.mesmotronic.ane.immersivemode.ImmersiveModeContext;
 
-public class IsSupportedFunction implements FREFunction 
+public class IsSupportedFunction implements FREFunction
 {
 	@Override
 	public FREObject call(FREContext context, FREObject[] args) 
 	{
-		try { return FREObject.newObject(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT); }
-		catch (Exception e1) { return null; }
+		try {
+            return FREObject.newObject(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
+        }
+		catch (Exception e1) {
+            Log.w(ImmersiveModeContext.TAG, e1.toString());
+            return null;
+        }
 	}
 }
