@@ -51,7 +51,7 @@ package com.mesmotronic.ane
 		 */
 		public static function get isSupported():Boolean
 		{
-			return true;
+			return !!context;
 		}
 		
 		public static function get stage():Stage
