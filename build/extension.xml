@@ -1,6 +1,6 @@
 <extension xmlns="http://ns.adobe.com/air/extension/19.0">
 	<id>com.mesmotronic.ane.immersivemode</id>
-	<versionNumber>1.1.6</versionNumber>
+	<versionNumber>1.1.7</versionNumber>
 	<platforms>
 		<platform name="Android-ARM">
 			<applicationDeployment>

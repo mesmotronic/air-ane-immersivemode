@@ -1,13 +1,13 @@
 <manifest 
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mesmotronic.ane.immersivemode"
-    android:versionCode="101"
-    android:versionName="1.0.1" 
+    android:versionCode="102"
+    android:versionName="1.0.2" 
     >
 	
     <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="23"
+        android:minSdkVersion="9"
+        android:targetSdkVersion="22"
         />
 
     <application />
